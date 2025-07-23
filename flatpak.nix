@@ -11,6 +11,7 @@ let
     "com.discordapp.Discord"
     "com.bitwig.BitwigStudio"
     "com.visualstudio.code"
+    "com.nextcloud.desktopclient.nextcloud"
   ];
 in {
   system.userActivationScripts.flatpakManagement = {
