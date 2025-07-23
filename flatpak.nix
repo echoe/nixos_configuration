@@ -7,7 +7,7 @@ let
   desiredFlatpaks = [
     "com.valvesoftware.Steam"
     "com.obsproject.Studio"
-    "com.obsproject.Studio.DroidCam"
+    "com.obsproject.Studio.Plugin.DroidCam"
     "com.discordapp.Discord"
     "com.bitwig.BitwigStudio"
     "com.visualstudio.code"

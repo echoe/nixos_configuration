@@ -1,9 +1,9 @@
-My default NixOS settings. Featuring:
+Default nixos install for dev. Featuring:
 
 -Pantheon Display Manager, because it's pretty.
 
--A default set of packages: Vim, git, and Firefox.
+-Flatpaks for anything that I think might get broken or otherwise be a pain in the ass when installed into the default nixos setup.
 
--Flatpaks for anything that I think might get broken or otherwise be a pain in the ass when installed into the default nixos setup: VSCode, Steam, Bitwig Studio, and OBS Studio with the Droidcam extension.
+-The default set of packages I want to use.
 
-Todo: Real time audio, as per https://github.com/musnix/musnix.
+-An optional configuration file specifying a musnix setup for low latency audio. For this to work, musnix needs to be cloned to /home/iris/Documents/Git/musnix . If you have cloned it elsewhere, change this reference in the configuration before running.
