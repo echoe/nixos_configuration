@@ -8,12 +8,19 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      # Install selected flatpak apps.
       ./flatpak.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Enabling realtime kernel.
+  boot.kernelPackages = pkgs.linuxPackages-rt_latest;
+
+  # Enabling SteamOS controller support.
+  hardware.steam-hardware.enable = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -46,9 +53,9 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the Pantheon Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.pantheon.enable = true;
+  # Enable Gnome.
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -78,11 +85,11 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with ‘passwd’. Audio group added.
   users.users.iris = {
     isNormalUser = true;
     description = "iris";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" ];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -97,7 +104,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
