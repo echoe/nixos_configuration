@@ -17,3 +17,7 @@ The music- version installs everything directly. To grab vsts, I needed to searc
 find / -iname vst
 and then manually add them into my DAW. But it did work, I have Surge XT in Reaper.
 music-configuration also doesn't use flatpak at all, so you can use the file by itself there.
+
+To clean up the boot menu:
+sudo nix-collect-garbage --delete-older-than 1d
+sudo nixos-rebuild boot
