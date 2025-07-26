@@ -82,7 +82,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’. Audio group added.
+  # Define my user account, with audio group. Set a password prior (on install).
   users.users.iris = {
     isNormalUser = true;
     description = "iris";
@@ -90,6 +90,18 @@
     packages = with pkgs; [
     #  thunderbird
     ];
+  };
+
+  # set Gnome dock apps
+  programs.dconf.profiles.user = {
+    databases = [{
+      lockAll = true;
+      settings = {
+        "org/gnome/shell" = {
+          favorite-apps = ["org.gnome.Console.desktop" "firefox.desktop" "fm.reaper.Reaper.desktop" "com.discordapp.Discord.desktop" "com.valvesoftware.Steam.desktop" "com.obsproject.Studio.desktop" "com.visualstudio.code.desktop"];
+        };
+      };
+    }];
   };
 
   # Enable automatic login for the user.
@@ -107,21 +119,47 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
+    #install nextcloud in conf
+    nextcloud-client
+    # gnome dock
+    gnomeExtensions.dash-to-dock
   ];
 
   # Install flatpak.
   services.flatpak.enable = true;
 
-  # Manage power settings. This is auto-cpufreq, as per https://nixos.wiki/wiki/Laptop
-  services.auto-cpufreq.enable = true;
-  services.auto-cpufreq.settings = {
-    battery = {
-       governor = "powersave";
-       turbo = "never";
-    };
-    charger = {
-       governor = "powersave";
-       turbo = "never";
+  # Manage power settings per https://nixos.wiki/wiki/Laptop for linux. This is tlp and thermald, auto-cpufreq may be better, or just leaving ppd.
+  # Also added tweaks as per tlp page's suggestions
+  services.thermald.enable = true;
+  services.power-profiles-daemon.enable = false;
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "balance_power";
+
+      PLATFORM_PROFILE_ON_BAT = "low-power";
+      PLATFORM_PROFILE_ON_AC = "balanced";
+
+      CPU_BOOST_ON_BAT = 0;
+      CPU_BOOST_ON_AC = 0;
+      CPU_HWP_DYN_BOOST_ON_AC = 0;
+      CPU_HWP_DYN_BOOST_ON_BAT = 0;
+
+      CPU_MIN_PERF_ON_AC = 0;
+      CPU_MAX_PERF_ON_AC = 100;
+      CPU_MIN_PERF_ON_BAT = 0;
+      CPU_MAX_PERF_ON_BAT = 20;
+
+      RUNTIME_PM_ON_AC = "auto";
+      RUNTIME_PM_ON_BAT = "auto";
+
+      # Optional helps save long term battery health
+      START_CHARGE_THRESH_BAT0 = 40; # 40 and bellow it starts to charge
+      STOP_CHARGE_THRESH_BAT0 = 80;  # 80 and above it stops charging
     };
   };
 
