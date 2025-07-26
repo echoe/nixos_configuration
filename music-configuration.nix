@@ -3,14 +3,12 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 # Unnecessary parts have been trimmed to taste.
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      # Import script for installing selected flatpak apps.
-      ./flatpak.nix
     ];
 
   # Bootloader.
@@ -79,10 +77,28 @@
     #media-session.enable = true;
   };
 
+  # Set proper plugin paths.
+  environment.variables = let
+    makePluginPath = format:
+      (lib.makeSearchPath format [
+        "$HOME/.nix-profile/lib"
+        "/run/current-system/sw/lib"
+        "/etc/profiles/per-user/$USER/lib"
+      ])
+      + ":$HOME/.${format}";
+  in {
+    DSSI_PATH   = makePluginPath "dssi";
+    LADSPA_PATH = makePluginPath "ladspa";
+    LV2_PATH    = makePluginPath "lv2";
+    LXVST_PATH  = makePluginPath "lxvst";
+    VST_PATH    = makePluginPath "vst";
+    VST3_PATH   = makePluginPath "vst3";
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define my user account, with audio group. Set a password prior (on install).
+  # Define a user account. Don't forget to set a password with ‘passwd’. Audio group added.
   users.users.iris = {
     isNormalUser = true;
     description = "iris";
@@ -98,7 +114,7 @@
       lockAll = true;
       settings = {
         "org/gnome/shell" = {
-          favorite-apps = ["org.gnome.Console.desktop" "firefox.desktop" "fm.reaper.Reaper.desktop" "com.discordapp.Discord.desktop" "com.valvesoftware.Steam.desktop" "com.obsproject.Studio.desktop" "com.visualstudio.code.desktop"];
+          favorite-apps = ["org.gnome.Console.desktop" "firefox.desktop" "cockos-reaper.desktop" "discord.desktop" "steam.desktop" "com.obsproject.Studio.desktop" "code.desktop"];
         };
       };
     }];
@@ -117,20 +133,43 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     git
-    # install nextcloud in conf
     nextcloud-client
     # gnome dock
     gnomeExtensions.dash-to-dock
+    steam
+    discord
+    vscode
+    krita
+    # OBS
+    obs-studio
+    obs-studio-plugins.droidcam-obs
+    # VSTs and DAWs
+    surge-XT
+    vital
+    infamousPlugins
+    lsp-plugins
+    cardinal
+    reaper
+    bitwig-studio
+    furnace
   ];
 
-  # Install flatpak.
-  services.flatpak.enable = true;
-
-  # Manage power settings per https://nixos.wiki/wiki/Laptop. This is leaving ppd as default for now, and adding thermald.
-  # services.power-profiles-daemon.enable = true;
-  services.thermald.enable = true;
+  # Manage power settings. This is auto-cpufreq, as per https://nixos.wiki/wiki/Laptop
+  # Also gotta disable the default.
+  #services.power-profiles-daemon.enable = false;
+  #services.auto-cpufreq.enable = true;
+  #services.auto-cpufreq.settings = {
+  #  battery = {
+  #     governor = "powersave";
+  #     turbo = "never";
+  #  };
+  #  charger = {
+  #     governor = "powersave";
+  #     turbo = "never";
+  #  };
+  #};
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).

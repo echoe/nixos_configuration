@@ -130,7 +130,7 @@
 
   # Manage power settings per https://nixos.wiki/wiki/Laptop for linux. This is tlp and thermald, auto-cpufreq may be better, or just leaving ppd.
   # Also added tweaks as per tlp page's suggestions
-  services.thermald.enable = true;
+  # services.thermald.enable = true;
   services.power-profiles-daemon.enable = false;
   services.tlp = {
     enable = true;

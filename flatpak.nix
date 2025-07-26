@@ -10,8 +10,16 @@ let
     "com.obsproject.Studio.Plugin.DroidCam"
     "com.discordapp.Discord"
     "com.bitwig.BitwigStudio"
+    "org.kde.kdenlive"
     "com.visualstudio.code"
     "com.nextcloud.desktopclient.nextcloud"
+    "com.bespokesynth.BespokeSynth"
+    "info.puredata.Pd"
+    "net.sonic_pi.SonicPi"
+    # vst's
+    "org.freedesktop.LinuxAudio.Plugins.Surge-XT"
+    "org.freedesktop.LinuxAudio.Plugins.Stochas"
+    "org.freedesktop.LinuxAudio.Plugins.Odin2"
   ];
 in {
   system.userActivationScripts.flatpakManagement = {

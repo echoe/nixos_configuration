@@ -12,4 +12,8 @@ Default nixos install for dev. Featuring:
 
 -GNOME Dock is set up with shortcuts automatically.
 
-The laptop- version uses tlp instead of ppd, with all-powersave settings. I still need to test.
+The laptop- version uses tlp instead of ppd, with all-powersave settings. I still need to test this.
+The music- version installs everything directly. To grab vsts, I needed to search for them at the root level:
+find / -iname vst
+and then manually add them into my DAW. But it did work, I have Surge XT in Reaper.
+music-configuration also doesn't use flatpak at all, so you can use the file by itself there.
