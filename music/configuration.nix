@@ -137,40 +137,30 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # standard apps
     vim
     git
-    nextcloud-client
-    # gnome dock
+    # gnome extensions
     gnomeExtensions.dash-to-dock
     gnomeExtensions.blur-my-shell
+    # non-flatpak apps
+    nextcloud-client
     steam
     discord
     krita
     obsidian
-    # Renoise only. Everything else is in flatpak :)
-    renoise
+    renoise # see custom stuff below
+    # all other installs are in the flatpak nix file
   ];
-  #Custom stuff to install my specific version of renoise.
+  # Custom overwrites default demo renoise with my downloaded tarfile.
   nixpkgs.overlays = [ (self: super: {
     renoise = super.renoise.override {
       releasePath = /home/iris/Downloads/rns_351_linux_x86_64.tar.gz;
     };
   })];
 
-  # Manage power settings. This is auto-cpufreq, as per https://nixos.wiki/wiki/Laptop
-  # Also gotta disable the default.
+  # Manage power settings. If you want to change, look at https://nixos.wiki/wiki/Laptop
   #services.power-profiles-daemon.enable = false;
-  #services.auto-cpufreq.enable = true;
-  #services.auto-cpufreq.settings = {
-  #  battery = {
-  #     governor = "powersave";
-  #     turbo = "never";
-  #  };
-  #  charger = {
-  #     governor = "powersave";
-  #     turbo = "never";
-  #  };
-  #};
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
