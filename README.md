@@ -5,6 +5,7 @@ A Useful(?) Default NixOS Configuration
 2. [Organization](#config)
 3. [What to edit](#editing)
 4. [General NixOS tips](#tips)
+5. [Possible Expansion](#todo)
 
 # Intro <a name="intro"></a>
 
@@ -24,17 +25,19 @@ My personal default nixos install, to be ran AFTER going through a general insta
 
 # Organization <a name="config"></a>
 
-Well, this is two questions. For the first one, I have written different configuration files because sometimes you need different settings depending on what different computers are required to do. For the current scripts in this repo:
+I've written a few different versions of my configuration.nix files. For the current scripts in this repo:
 
-- I have always had infinite issues setting up workstations for music. Therefore, the two scripts in music install everything directly, using flatpak. You do need to add /app/extensions/plugins/(plugintype) to the settings of the DAWs that are installed here to properly grab the plugins.
+- The base configuration.nix has a base setup that doesn't install the VST's/etc. in a customized way.
 
-- The base configuration.nix has a base setup.
+- I have always had infinite issues setting up workstations for music production in linux. Therefore, the two scripts in music install everything directly - mostly using flatpak. You do need to:
+- either remove renoise, or provide your own tarball and replace the path
+- add one VST path: /app/extensions/plugins/(plugintype) - to the settings of the DAWs that are installed here to properly grab the plugins.
 
 - The other folder is configurations that are in progress.
 
 # What to Edit <a name="editing"></a>
 
-From the top down:
+From the top of configuration.nix down:
 -Change my username to yours. Anywhere that has 'iris' in it, you'll want to replace that with your username. You should have picked your username when you went through initial NixOS setup.
 -For all of the apps in 'favorite-apps', you will want to pick your own favorite apps. You can find the desktop extensions for all of your apps by running this command in a terminal:
 
@@ -50,7 +53,9 @@ ls /run/current-system/sw/share/applications/ | grep name
 
 -If you are using the music config, change the location of renoise to wherever you've downloaded your personal copy of renoise (linux). Sadly Renoise cannot use the installed plugins, but this doesn't affect my personal usage of it. 
 
-Then you're done!
+-You also may want to edit the flatpak apps listed in flatpak.nix if you are using the music production version of this configuration: you can change them in there. Do note that if you don't declare the package you want precisely, flatpak may refuse to install without you specifying the package version.
+
+And then ... you're done!
 
 # Tips <a name="tips"></a>
 
@@ -67,3 +72,7 @@ sudo nixos-rebuild boot
 -In general I've been able to do anything I want ... it just requires ... a lot of elbow grease. But you get there. And then hopefully you don't have to do it again. Also, you actually learn /how/ everything works in the process of setting this all up.
 
 Happy trails!
+
+# Possible expansions <a name="todo"></a>
+
+I'd love to make this be a sort of add-on you can import into your automatic configuration.nix file, like my current configuration.nix file is doing with flatpak. So all you would need to do is point to the new file, and everything in the configuration.nix file would be the user customization stuff. I'll update if I figure out how to change to that.
