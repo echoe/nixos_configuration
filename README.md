@@ -1,12 +1,13 @@
 #####
 A Useful(?) Default NixOS Configuration
 
-#1 - Intro
-#2 - What do the separate configuration files do? What do you need to use to have a good setup?
-#3 - What should you edit if you aren't me?
-#4 - Any helpful starter NixOS tips?
+# Table of contents
+1. [Intro](#intro)
+2. [Organization](#config)
+3. [What to edit](#editing)
+4. [General NixOS tips](#tips)
 
-# Intro
+# Intro <a name="intro"></a>
 
 My personal default nixos install, to be ran AFTER going through a general install with a USB NixOS installation drive. Featuring:
 
@@ -22,7 +23,7 @@ My personal default nixos install, to be ran AFTER going through a general insta
 
 -GNOME Dock is set up with shortcuts automatically.
 
-#2 - What do the different files do? What do I need to use to have a good setup?
+## Organization <a name="config"></a>
 
 Well, this is two questions. For the first one, I have written different configuration files because sometimes you need different settings depending on what different computers are required to do. For the current scripts in this repo:
 
@@ -32,7 +33,7 @@ Well, this is two questions. For the first one, I have written different configu
 
 - The other folder is configurations that are in progress.
 
-#3 - What should I change in the configuration.nix files for this to work on my system?
+# What to Edit <a name="editing"></a>
 
 From the top down:
 -Change my username to yours. Anywhere that has 'iris' in it, you'll want to replace that with your username. You should have picked your username when you went through initial NixOS setup.
@@ -52,7 +53,7 @@ ls /run/current-system/sw/share/applications/ | grep name
 
 Then you're done!
 
-#4 - Any Helpful NixOS Tips?
+# Tips <a name="tips"></a>
 
 -sudo nixos-rebuild switch applies your configuration changes.
 
