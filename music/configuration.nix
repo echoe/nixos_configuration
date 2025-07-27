@@ -9,6 +9,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./flatpak.nix
     ];
 
   # Bootloader.
@@ -124,6 +125,9 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "iris";
 
+  # Install flatpak.
+  services.flatpak.enable = true;
+
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -138,23 +142,20 @@
     nextcloud-client
     # gnome dock
     gnomeExtensions.dash-to-dock
+    gnomeExtensions.blur-my-shell
     steam
     discord
-    vscode
     krita
-    # OBS
-    obs-studio
-    obs-studio-plugins.droidcam-obs
-    # VSTs and DAWs
-    surge-XT
-    vital
-    infamousPlugins
-    lsp-plugins
-    cardinal
-    reaper
-    bitwig-studio
-    furnace
+    obsidian
+    # Renoise only. Everything else is in flatpak :)
+    renoise
   ];
+  #Custom stuff to install my specific version of renoise.
+  nixpkgs.overlays = [ (self: super: {
+    renoise = super.renoise.override {
+      releasePath = /home/iris/Downloads/rns_351_linux_x86_64.tar.gz;
+    };
+  })];
 
   # Manage power settings. This is auto-cpufreq, as per https://nixos.wiki/wiki/Laptop
   # Also gotta disable the default.
