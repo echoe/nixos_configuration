@@ -115,7 +115,7 @@
       lockAll = true;
       settings = {
         "org/gnome/shell" = {
-          favorite-apps = ["org.gnome.Console.desktop" "firefox.desktop" "cockos-reaper.desktop" "discord.desktop" "steam.desktop" "com.obsproject.Studio.desktop" "code.desktop"];
+          favorite-apps = ["org.gnome.Console.desktop" "firefox.desktop" "discord.desktop" "steam.desktop" "com.obsproject.Studio.desktop" "code.desktop" "renoise.desktop" "fm.reaper.Reaper.desktop" "krita.desktop" "obsidian.desktop"];
         };
       };
     }];
@@ -137,30 +137,41 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # standard apps
     vim
     git
-    # gnome extensions
+    nextcloud-client
+    # gnome dock
     gnomeExtensions.dash-to-dock
     gnomeExtensions.blur-my-shell
-    # non-flatpak apps
-    nextcloud-client
     steam
     discord
     krita
     obsidian
-    renoise # see custom stuff below
-    # all other installs are in the flatpak nix file
+    vscode-with-extensions
+    # Renoise only. Everything else is in flatpak :)
+    renoise
   ];
-  # Custom overwrites default demo renoise with my downloaded tarfile.
+  #Custom stuff to install my specific version of renoise.
   nixpkgs.overlays = [ (self: super: {
     renoise = super.renoise.override {
       releasePath = /home/iris/Downloads/rns_351_linux_x86_64.tar.gz;
     };
   })];
 
-  # Manage power settings. If you want to change, look at https://nixos.wiki/wiki/Laptop
+  # Manage power settings. This is auto-cpufreq, as per https://nixos.wiki/wiki/Laptop
+  # Also gotta disable the default.
   #services.power-profiles-daemon.enable = false;
+  #services.auto-cpufreq.enable = true;
+  #services.auto-cpufreq.settings = {
+  #  battery = {
+  #     governor = "powersave";
+  #     turbo = "never";
+  #  };
+  #  charger = {
+  #     governor = "powersave";
+  #     turbo = "never";
+  #  };
+  #};
 
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
