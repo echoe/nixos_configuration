@@ -1,4 +1,3 @@
-#####
 A Useful(?) Default NixOS Configuration
 
 # Table of contents
@@ -23,7 +22,7 @@ My personal default nixos install, to be ran AFTER going through a general insta
 
 -GNOME Dock is set up with shortcuts automatically.
 
-## Organization <a name="config"></a>
+# Organization <a name="config"></a>
 
 Well, this is two questions. For the first one, I have written different configuration files because sometimes you need different settings depending on what different computers are required to do. For the current scripts in this repo:
 
