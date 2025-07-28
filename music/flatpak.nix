@@ -5,6 +5,7 @@ let
   grep = pkgs.gnugrep;
   # 1. Declare the Flatpaks you *want* on your system
   desiredFlatpaks = [
+    "com.valvesoftware.Steam"
     "com.obsproject.Studio"
     "com.obsproject.Studio.Plugin.DroidCam"
     "com.obsproject.Studio.Plugin.BackgroundRemoval"
