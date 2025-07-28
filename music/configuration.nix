@@ -97,7 +97,7 @@
       lockAll = true;
       settings = {
         "org/gnome/shell" = {
-          favorite-apps = ["org.gnome.Console.desktop" "firefox.desktop" "discord.desktop" "steam.desktop" "com.obsproject.Studio.desktop" "code.desktop" "renoise.desktop" "fm.reaper.Reaper.desktop" "krita.desktop" "obsidian.desktop"];
+          favorite-apps = ["org.gnome.Console.desktop" "firefox.desktop" "discord.desktop" "com.valvesoftware.Steam.desktop" "com.obsproject.Studio.desktop" "code.desktop" "renoise.desktop" "fm.reaper.Reaper.desktop" "krita.desktop" "obsidian.desktop"];
         };
       };
     }];
