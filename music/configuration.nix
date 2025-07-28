@@ -126,7 +126,6 @@
     # gnome dock
     gnomeExtensions.dash-to-dock
     gnomeExtensions.blur-my-shell
-    steam
     discord
     krita
     obsidian
