@@ -106,7 +106,11 @@
   # Enable automatic login for the user. This doesn't fully work but you at least get keyring prompted immediately.
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "iris";
-  security.pam.services.gdm.enableGnomeKeyring = true;
+  #security.pam.services.gdm.enableGnomeKeyring = true;
+
+  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103>
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
 
   # Install flatpak.
   services.flatpak.enable = true;
@@ -136,7 +140,7 @@
   #Custom stuff to install my specific version of renoise.
   nixpkgs.overlays = [ (self: super: {
     renoise = super.renoise.override {
-      releasePath = /home/iris/Downloads/rns_351_linux_x86_64.tar.gz;
+      releasePath = /home/iris/Documents/rns_351_linux_x86_64.tar.gz;
     };
   })];
 
